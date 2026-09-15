@@ -1,0 +1,12 @@
+{
+  // 只产出 .d.ts（lib/types/**）；可执行的 JS 由 scripts/build-*.mjs（esbuild）产出。
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "rootDir": "src",
+    "outDir": "lib/types"
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx"]
+}

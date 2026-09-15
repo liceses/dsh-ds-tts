@@ -1,0 +1,38 @@
+{
+  // 自包含编译设置：类型从 node_modules 里的 @deepseek-ai/* 解析（运行时由 dsh 提供，
+  // 本地开发用 `npm run link-sdk` 从本机 dsh 安装链接过来），不依赖任何 DSH 源码检出。
+  //
+  // 这里刻意**没有任何本机绝对路径**：早期版本用 tsconfig `paths` 把
+  // `@deepseek-ai/dsh-client-ui-slots` / `dsh-client-runtime` 钉到某个 profile 目录下，
+  // 那是因为本机 profile 里这两个是**悬空 junction**（有目录但无 package.json），
+  // 会让 ui-chat / ui-conversation 的 SlotMap `declare module` 增补被静默丢弃。
+  // 现在改由 `scripts/link-sdk.mjs` 在**本仓库的 node_modules** 下落一份可用的副本，
+  // 向上解析自然会命中它，所以 paths 不再需要。
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "jsx": "react-jsx",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "strict": true,
+    "noImplicitOverride": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    // 关键：让 TS 把 symlink/junction 的**路径本身**当作模块位置，而不是穿透到真实目录。
+    //
+    // 为什么必须开：本机 profile 里的 `@deepseek-ai/dsh-client-ui-slots` 与 `dsh-client-runtime`
+    // 是**悬空 junction**（有目录、无 package.json）。若 TS 穿透链接，ui-chat / ui-conversation
+    // 在自身位置向上解析 ui-slots 时会命中那个坏目录，它们对 SlotMap 的 `declare module`
+    // 增补就被静默丢弃（症状：SlotMap 里只剩本插件自己声明的那几个 key）。
+    // 开着它，解析会停留在**本仓库 node_modules** 里（`npm run link-sdk` 建立的那套 junction），
+    // 全部命中可用副本 —— 于是 committed 配置里不需要任何绝对路径。
+    "preserveSymlinks": true,
+    "types": ["node"]
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx"]
+}

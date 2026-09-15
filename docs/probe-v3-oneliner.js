@@ -1,0 +1,6 @@
+/* ds-tts v3 · 只 dump history_messages 结构（单行版，不做任何合成）
+ * 在已登录的 chat.deepseek.com、且打开着一个**真的有问有答**的对话时，
+ * F12 → Console → 粘贴下面这一行 → 回车。
+ * 输出每行都以 [ds-tts-v3] 开头；如果开头不是它，说明跑的不是本片段。
+ */
+(async()=>{const raw=localStorage.getItem('userToken');let t='';try{const p=JSON.parse(raw);t=typeof p==='string'?p:(p&&p.value)||''}catch{t=raw||''};const sid=(location.pathname.match(/\/a\/chat\/s\/([0-9a-fA-F-]{8,})/i)||[])[1];const j=await(await fetch('/api/v0/chat/history_messages?chat_session_id='+encodeURIComponent(sid),{headers:{Authorization:'Bearer '+t}})).json();const b=j&&j.data&&j.data.biz_data;const m=(b&&b.chat_messages)||[];console.log('[ds-tts-v3] token:',!!t,'sid:',sid,'code:',j&&j.code,'biz_code:',j&&j.data&&j.data.biz_code,'biz_keys:',b?Object.keys(b):null,'count:',m.length);m.forEach((r,i)=>console.log('[ds-tts-v3] #'+i,JSON.stringify({keys:Object.keys(r),id:r.message_id||r.id,role:r.role,type:r.type,role_type:r.role_type,sender:r.sender,contentType:Array.isArray(r.content)?'array':typeof r.content,contentLen:typeof r.content==='string'?r.content.length:null,contentHead:typeof r.content==='string'?r.content.slice(0,60):null})));console.log('[ds-tts-v3] raw#0:',JSON.stringify(m[0]).slice(0,1500))})()

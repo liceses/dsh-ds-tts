@@ -1,0 +1,15 @@
+# 依赖与构建产物（消费者自行 pnpm install + npm run build）
+node_modules/
+lib/
+*.tgz
+.tmp/
+
+# DSH 运行期私有数据与本地评审产物（与同工作区其它插件一致）
+.dsh/
+
+# 编辑器 / 系统垃圾
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.log

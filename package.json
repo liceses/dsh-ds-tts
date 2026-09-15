@@ -1,0 +1,70 @@
+{
+  "name": "ds-tts",
+  "version": "0.1.0",
+  "private": true,
+  "description": "DSH 里用 DeepSeek 官方朗读音色朗读对话、导出音频，并提供「文本进、音频出」的接口与工具。宿主半走 DS 官方 TTS（ticket + wss），文本投递由真实浏览器经 CDP 完成（不逆向 PoW、不伪装 TLS 指纹）。",
+  "type": "module",
+  "main": "./lib/index.js",
+  "types": "./lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "types": "./lib/types/client/index.d.ts",
+      "default": "./lib/client.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "inject": [
+        "@deepseek-ai/dsh-client-runtime",
+        "@deepseek-ai/dsh-client-ui-slots"
+      ],
+      "platform": "web"
+    },
+    "_note": "运行期提供的 @deepseek-ai/* SDK 见 README「依赖」一节；它们**刻意不在依赖字段里**，原因见 .npmrc。本地开发用 `npm run link-sdk` 链接类型。"
+  },
+  "scripts": {
+    "build": "node scripts/build-host.mjs && node scripts/build-client.mjs && tsc -p tsconfig.build.json",
+    "build:host": "node scripts/build-host.mjs",
+    "build:client": "node scripts/build-client.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "npm run build && node --test",
+    "link-sdk": "node scripts/link-sdk.mjs",
+    "probe": "node scripts/probe.mjs"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.0",
+    "@types/react": "~18.3.1",
+    "@types/ws": "^8.5.12",
+    "esbuild": "^0.25.0",
+    "react": "^18.3.1",
+    "typescript": "~5.7.2",
+    "ws": "^8.18.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  },
+  "files": [
+    "lib/**/*.js",
+    "lib/**/*.js.map",
+    "lib/**/*.d.ts",
+    "src",
+    "scripts",
+    "docs",
+    "cordis.patch.yml",
+    "README.md"
+  ],
+  "license": "BSD-3-Clause"
+}

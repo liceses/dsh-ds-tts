@@ -1,0 +1,10 @@
+# ds-tts bundle patch —— 向 Web 装配树插入一行双面插件：
+#
+#   node 半（exports "."）跑在宿主进程：/api/ds-tts/* 路由 + tts_speak/tts_voices/tts_status 工具
+#   browser 半（exports "./client"）由 dsh-client-modules 扫到 package.json 的 dsh.client
+#   声明后编入 window.__DSH_BOOT__，经 /plugins/ds-tts/client.js 提供（id 必须等于包名）。
+#
+# 激活：dsh plugin --profile web add link:<本包路径>
+- insert:
+    - id: ds-tts
+      name: ds-tts

@@ -1,0 +1,4 @@
+# pnpm 11 把「允许哪些依赖跑安装脚本」放在这里（package.json 的 pnpm 字段已不生效）。
+# esbuild 需要跑安装脚本；它是唯一一个需要的。
+allowBuilds:
+  esbuild: true
