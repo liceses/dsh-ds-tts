@@ -2,7 +2,7 @@
 
 > **English**: A DSH plugin that reads assistant messages aloud with DeepSeek's official TTS voices, exports audio files, and exposes a text-in/audio-out HTTP API.
 
-[![DSH Plugin](https://img.shields.io/badge/DSH-plugin-4f46e5.svg)](https://github.com/liceses/awesome-dsh-plugin)
+[![DSH Plugin](https://img.shields.io/badge/DSH-plugin-4f46e5.svg)](https://github.com/topics/dsh-plugin)
 ![Platform](https://img.shields.io/badge/platform-Windows-lightgrey.svg)
 ![Node](https://img.shields.io/badge/node-%E2%89%A522-339933.svg)
 
@@ -531,4 +531,4 @@ BSD-3-Clause —— 声明见 [`package.json`](package.json) 的 `license` 字�
 
 ## 相关
 
-- [awesome-dsh-plugin](https://github.com/liceses/awesome-dsh-plugin) —— DSH 插件精选列表。
+- [awesome-dsh-plugin](https://github.com/liceses/awesome-dsh-plugin) —— DSH 插件精选列表（第三方整理）。**本插件尚未被它收录**；想找更多 DSH 插件可以看 [dsh-plugin 话题页](https://github.com/topics/dsh-plugin)。
